@@ -41,8 +41,14 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
       const lineItems = products.map((product) => {
         return {
-          price,
-          quantity,
+          price_data: {
+            currency: "inr",
+            product_data: {
+              name: product.title,
+            },
+            unit_amount: product.price * 100,
+          },
+          quantity: product.quantity,
         };
       });
 
@@ -54,19 +60,22 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         //     quantity: 1,
         //   },
         // ],
-        lineItems: [lineItems],
+        shipping_address_collection: { allowed_countries: ["IN"] },
+        lineItems: lineItems,
         mode: "payment",
-        success_url: `${YOUR_DOMAIN}?success=true`,
-        cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+        success_url: `${process.env.CLIENT_BASE_URL}?success=true`,
+        cancel_url: `${process.env.CLIENT_BASE_URL}?canceled=true`,
       });
 
       await strapi.entityService.create("api::order.order", {
         data: {
           products,
-          strapiId: "dummy",
+          // stripeId: "dummy",
+          stripeId: session.id,
         },
       });
-      return { success: true };
+      // return { success: true };
+      return { stripeId: session.id };
     } catch (err) {
       console.log("error", err);
       ctx.response.status = 500;
