@@ -1,0 +1,12 @@
+without using the accesstoken if we need to access the routes ,inside stapi go to settings->roles->public i.e the
+unauthenticated user then go to ->order
+->enable customOrderController and save it
+therfore ebaling the order api can be accessed by the unauthenticated user
+copy and pate the code from strapi documentation
+
+
+go to USERS & PERMISSIONS PLUGIN and provide access to customOrderController, which you have created
+
+entityService is just like mongoose
+
+services are like functions
