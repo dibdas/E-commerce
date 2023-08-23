@@ -10,3 +10,9 @@ go to USERS & PERMISSIONS PLUGIN and provide access to customOrderController, wh
 entityService is just like mongoose
 
 services are like functions
+
+routes->policy-> midleware-> controller
+
+secret key is the backend to get the stripe backend api
+
+publishable is in the frontend to redirect to checkout page
